@@ -1,0 +1,38 @@
+# Binaries
+/bin/
+/cmd/api/main
+
+# Build output
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+
+# Dependency directories
+/pkg/mod/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*~
+
+# Environment files
+.env
+.env.test
+
+# Docker files and volumes
+docker-compose.override.yml
+**/docker-compose.override.yml
+docker-compose.override.yaml
+**/docker-compose.override.yaml
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

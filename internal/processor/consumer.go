@@ -3,21 +3,15 @@ package processor
 import (
 	"context"
 	"log"
+	"log-processor/internal/validator"
+	"log-processor/internal/db"
 	"os"
 	"time"
 
 	"github.com/streadway/amqp"
-	"github.com/joho/godotenv"
 )
 
 func StartConsumer(ctx context.Context) {
-
-	// Load environment variables
-	err := godotenv.Load()
-    if err != nil {
-        log.Printf("Warning: Could not load .env file: %v", err)
-    }
-
 	//fetch URL from .env if no url specified use guest as default
 	rabbitUrl := os.Getenv("RABBITMQ_URL")
 	if rabbitUrl == "" {
@@ -31,7 +25,7 @@ func StartConsumer(ctx context.Context) {
 
 	//open connection to rabbitmq message broker with retry logic
 	var conn *amqp.Connection
-	err = nil
+	var err error
 	maxRetries := 5
 	retryDelay := 5 * time.Second
 
@@ -90,16 +84,30 @@ func StartConsumer(ctx context.Context) {
 	}
 
 	log.Println("Consumer started Successfully")
+	log.Println("Waiting for logs ....")
 
 	// Start consumer
 	go func() {
 		for msg := range msgs {
 			// Process message here
-			log.Printf("Received message: %s", msg.Body)
+			log.Printf("Received Log: %s", msg.Body)
 			
+			logEntry, err := validator.ValidateLog(msg.Body)
+			if err != nil {
+				log.Printf("Invalid log %v\n", err)
+				continue
+			}
+
+			if err := db.SaveLog(logEntry); err != nil {
+            log.Printf("Failed to save log to database: %v\n", err)
+			} else {
+				log.Println("✅ Log saved")
+			}
+
 			// Acknowledge message after successful processing
 			if err := msg.Ack(false); err != nil {
 				log.Printf("Error acknowledging message: %v", err)
+				break
 			}
 		}
 		log.Println("Consumer stopped")
@@ -108,6 +116,6 @@ func StartConsumer(ctx context.Context) {
 	// Wait for context cancellation
 	<-ctx.Done()
 	log.Println("Shutting down consumer...")
-
-
+	channel.Close()
+	conn.Close()
 }	

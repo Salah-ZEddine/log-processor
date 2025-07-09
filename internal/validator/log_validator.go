@@ -3,7 +3,7 @@ package validator
 import (
     "encoding/json"
     "errors"
-    "log-processor/internal/model"
+    "github.com/Salah-ZEddine/incident-dashboard-common/models"
 )
 
 func ValidateLog(raw []byte) (*models.Log, error) {

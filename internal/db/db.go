@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"log-processor/internal/model"
+	"github.com/Salah-ZEddine/incident-dashboard-common/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

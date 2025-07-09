@@ -101,7 +101,7 @@ func StartConsumer(ctx context.Context) {
 			if err := db.SaveLog(logEntry); err != nil {
             log.Printf("Failed to save log to database: %v\n", err)
 			} else {
-				log.Println("✅ Log saved")
+				log.Println("Log saved")
 			}
 
 			// Acknowledge message after successful processing

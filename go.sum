@@ -1,3 +1,5 @@
+github.com/Salah-ZEddine/incident-dashboard-common v0.0.0-20250709095006-f2e014e1a155 h1:lkTNex0jfUmbW6uxPNg7MHiH/lUpDK9Ljpw4Wx81jp4=
+github.com/Salah-ZEddine/incident-dashboard-common v0.0.0-20250709095006-f2e014e1a155/go.mod h1:RViNQ1UteP+HWMN338EjjF3wQIrg+AccA6pin7gJZ0A=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/jackc/pgpassfile v1.0.0 h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=
 github.com/jackc/pgpassfile v1.0.0/go.mod h1:CEx0iS5ambNFdcRtxPj5JhEz+xB6uRky5eyVu/W2HEg=

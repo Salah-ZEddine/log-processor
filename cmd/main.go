@@ -19,8 +19,13 @@ func main() {
         log.Printf("Warning: Could not load .env file: %v", err)
     }
 
+    autoMigrate := true
+    if os.Getenv("DB_AUTO_MIGRATE") == "false" {
+        autoMigrate = false
+    }
+
 	//Init DB
-	db.Init()
+	db.Init(autoMigrate)
     ctx, cancel := context.WithCancel(context.Background())
     defer cancel()
 

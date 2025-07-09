@@ -12,7 +12,7 @@ import (
 var DB *gorm.DB
 
 //setup the database connection and auto-migrate tables and columns
-func Init(){
+func Init(autoMigrate bool){
 
 	//Format the connection string (DSN)
 	dsn := fmt.Sprintf(
@@ -31,12 +31,14 @@ func Init(){
 		log.Fatal("Failed to connect to the database: ", err)
 	}
 
-	err = DB.AutoMigrate(&models.Log{})
-	if err != nil {
+	if autoMigrate {
+		err = DB.AutoMigrate(&models.Log{})
+		if err != nil {
 		log.Fatal("Failed to automigrate tables: ", err)
+		}
 	}
 
-	log.Println("Database connected and migrated")
+	log.Println("Database connected")
 	
 }
 

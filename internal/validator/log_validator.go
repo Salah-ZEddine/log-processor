@@ -4,6 +4,7 @@ import (
     "encoding/json"
     "errors"
     "github.com/Salah-ZEddine/incident-dashboard-common/models"
+    "log"
 )
 
 func ValidateLog(raw []byte) (*models.Log, error) {
@@ -12,8 +13,9 @@ func ValidateLog(raw []byte) (*models.Log, error) {
         return nil, errors.New("invalid JSON structure")
     }
 
-    if logEntry.Level == "" || logEntry.Source == "" || logEntry.Message == "" || logEntry.Timestamp.IsZero() {
-        return nil, errors.New("missing required fields")
+    if err := logEntry.Validate(); err != nil {
+        log.Printf("invalid log: %v", err)
+        return nil, err
     }
 
     return &logEntry, nil
